@@ -19,7 +19,8 @@ config({
   path: "./config/config.env",
 });
 
-const originOption = process.env.FRONTEND_URL || "http://localhost:5173";
+const originOption = process.env.FRONTEND_URL;
+console.log(originOption);
 app.use(
   cors({
     origin: originOption,

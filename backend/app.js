@@ -64,7 +64,7 @@ app.use('/api/v1/commission', commissionRouter);
 app.use('/api/v1/superadmin', superAdminRouter);
 
 endedAuctionCron();
-// connection();
+connection();
 app.use(errorMiddleware);
 
 export default app;

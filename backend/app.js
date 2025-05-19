@@ -19,15 +19,33 @@ config({
   path: "./config/config.env",
 });
 
-const originOption = process.env.FRONTEND_URL;
-console.log(originOption);
-app.use(
-  cors({
-    origin: "https://bolify-backup.vercel.app",
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// const frontendUrl = process.env.FRONTEND_URL || "http://localhost:8000";
+// console.log("Frontend URL:", frontendUrl);
+
+const allowedOrigins = [
+  'https://bolify-backup.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
+
+
+// app.use(
+//   cors({
+//     origin: frontendUrl,
+//     methods: ["POST", "GET", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());

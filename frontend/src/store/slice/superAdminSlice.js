@@ -121,7 +121,7 @@ const superAdminSlice = createSlice({
 export const getMonthlyRevenue = () => async (dispatch) => {
     dispatch(superAdminSlice.actions.requestForMonthlyRevenue());
     try {
-        const response = await axios.get("http://localhost:8000/api/v1/superadmin/monthlyincome",{
+        const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/monthlyincome`,{
             withCredentials: true,
         })
         console.log(response.data.totalMouthlyRevenue);
@@ -139,7 +139,7 @@ export const getMonthlyRevenue = () => async (dispatch) => {
 export const getAllUsers = () => async(dispatch) => {
     dispatch(superAdminSlice.actions.requestForAllUsers());
     try {
-        const respones = await axios.get(`http://localhost:8000/api/v1/superadmin/users/getall`,{
+        const respones = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/users/getall`,{
             withCredentials : true,
         })
 
@@ -155,7 +155,7 @@ export const getAllUsers = () => async(dispatch) => {
 export const getAllPaymentProofs = () => async(dispatch) => {
     dispatch(superAdminSlice.actions.requestForPaymentProof());
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/superadmin/paymentproofs/getall`,{withCredentials : true,})
+        const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/paymentproofs/getall`,{withCredentials : true,})
         dispatch(superAdminSlice.actions.successForPaymentProof(response.data));
 
     } catch (error) {
@@ -169,7 +169,7 @@ export const paymentProofsDetail = (id) => async(dispatch) => {
     dispatch(superAdminSlice.actions.requestForPaymentProofDetail());
 
     try {
-        const respones = await axios.get(`http://localhost:8000/api/v1/superadmin/paymentproof/${id}`,{withCredentials : true});
+        const respones = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/paymentproof/${id}`,{withCredentials : true});
 
         dispatch(superAdminSlice.actions.successForPaymentProofDetail(respones.data));
 
@@ -201,7 +201,7 @@ export const updatePaymentProof = (id,status,amount) => async(dispatch) => {
     dispatch(superAdminSlice.actions.requestForUpdatePaymentProof());
 
     try {
-        const response = await axios.put(`http://localhost:8000/api/v1/superadmin/paymentproof/status/update/${id}`,{status,amount},{
+        const response = await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/paymentproof/status/update/${id}`,{status,amount},{
             withCredentials : true,
             headers : {"Content-Type" : "application/json"}
         })
@@ -227,7 +227,7 @@ export const deleteAuctionItem = (id) => async(dispatch) => {
 
     try {
 
-        const response = await axios.delete(`http://localhost:8000/api/v1/superadmin/auctionitem/delete/${id}`,{
+        const response = await axios.delete(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/auctionitem/delete/${id}`,{
             withCredentials : true,
         })
 
@@ -250,7 +250,7 @@ export const getSinglePaymentProofDetail = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForSinglePaymentProofDetail());
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/v1/superadmin/paymentproof/${id}`,
+      `${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/superadmin/paymentproof/${id}`,
       { withCredentials: true }
     );
     dispatch(

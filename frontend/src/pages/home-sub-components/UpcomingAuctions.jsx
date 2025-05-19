@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import Card from '@/custom-components/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiAuctionFill, RiTimeLine, RiCalendarEventLine } from 'react-icons/ri';
-import { auctionData } from '../../../data';
-import CardSilder from '@/custom-components/CardSilder';
 import { getAllAuctionItems } from '@/store/slice/auctionSlice';
 import { Link } from 'react-router-dom';
 

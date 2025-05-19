@@ -1,95 +1,95 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 
 
-const auctionSlice  =  createSlice({
+const auctionSlice = createSlice({
     name: "auction",
-    initialState : {
-        loading : false,
-        itemDetail : {},
-        auctionDetail : {},
-        auctionBidders : {},
-        myAuctions : [],
-        allAuctions : [],
+    initialState: {
+        loading: false,
+        itemDetail: {},
+        auctionDetail: {},
+        auctionBidders: {},
+        myAuctions: [],
+        allAuctions: [],
     },
-    reducers : {
+    reducers: {
 
-        createAuctionRequest(state,action) {
+        createAuctionRequest(state, action) {
             state.loading = true;
         },
-        createAuctionSuccess(state,action) {
+        createAuctionSuccess(state, action) {
             state.loading = false;
         },
-        createAuctionFailed(state,action) {
+        createAuctionFailed(state, action) {
             state.loading = false;
         },
 
 
-        getAllAuctionItemRequest(state,action) {
+        getAllAuctionItemRequest(state, action) {
             state.loading = true;
         },
-        getAllAuctionItemSuccess(state,action){
+        getAllAuctionItemSuccess(state, action) {
             state.loading = false;
             state.allAuctions = action.payload
         },
-        getAllAuctionItemFailed(state,action){
+        getAllAuctionItemFailed(state, action) {
             state.loading = false;
         },
 
-        getAuctionDetailRequest(state,action) {
+        getAuctionDetailRequest(state, action) {
             state.loading = true;
-            state.auctionDetail =  [];
+            state.auctionDetail = [];
             state.auctionBidders = [];
         },
-        getAuctionDetailSuccess(state,action){
+        getAuctionDetailSuccess(state, action) {
             state.loading = false;
             state.auctionDetail = action.payload.auctionItem;
             state.auctionBidders = action.payload.bidders;
         },
-        getAuctionDetailFailed(state,action){
+        getAuctionDetailFailed(state, action) {
             state.loading = false;
             state.auctionDetail = [];
             state.auctionBidders = [];
         },
 
 
-        getMyAuctionsRequest(state,action){
+        getMyAuctionsRequest(state, action) {
             state.loading = false;
             state.myAuctions = [];
         },
-        getMyAuctionsSuccess(state,action){
+        getMyAuctionsSuccess(state, action) {
             state.loading = true;
             state.myAuctions = action.payload
         },
-        getMyAuctionsFailed(state,action){
+        getMyAuctionsFailed(state, action) {
             state.loading = false;
             state.myAuctions = [];
         },
 
-        deleteAuctionItemRequest(state,action){
+        deleteAuctionItemRequest(state, action) {
             state.action = false;
 
         },
-        deleteAuctionItemSuccess(state,action){
+        deleteAuctionItemSuccess(state, action) {
             state.action = true;
         },
-        deleteAuctionItemFailed(state,action){
+        deleteAuctionItemFailed(state, action) {
             state.action = false;
         },
-        republishItemRequest(state,action){
+        republishItemRequest(state, action) {
             state.action = false;
 
         },
-        republishItemSuccess(state,action){
+        republishItemSuccess(state, action) {
             state.action = true;
         },
-        republishItemFailed(state,action){
+        republishItemFailed(state, action) {
             state.action = false;
         },
 
-        resetSlice(state,action){
+        resetSlice(state, action) {
             state.loading = false;
             state.allAuctions = state.allAuctions;
             state.auctionDetail = state.auctionDetail;
@@ -100,15 +100,15 @@ const auctionSlice  =  createSlice({
 })
 
 
-export const createAuction = (formData) =>  async (dispatch) => {
+export const createAuction = (formData) => async (dispatch) => {
     dispatch(auctionSlice.actions.createAuctionRequest());
-
+    console.log(import.meta.env.VITE_APP_BACKEND_URL)
     try {
-        const response = await axios.post("http://localhost:8000/api/v1/auctionitem/create", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/create`, formData, {
             withCredentials: true,
-            headers: {"Content-Type" : "multipart/form-data"}
+            headers: { "Content-Type": "multipart/form-data" }
         })
-        
+
 
         dispatch(auctionSlice.actions.createAuctionSuccess());
         toast.success(response.data.message);
@@ -124,10 +124,10 @@ export const createAuction = (formData) =>  async (dispatch) => {
 
 
 
-export const getAllAuctionItems = () =>  async (dispatch) => {
+export const getAllAuctionItems = () => async (dispatch) => {
     dispatch(auctionSlice.actions.getAllAuctionItemRequest());
     try {
-        const response = await axios.get("http://localhost:8000/api/v1/auctionitem/allitems",{withCredentials : true});
+        const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/allitems`, { withCredentials: true });
         dispatch(auctionSlice.actions.getAllAuctionItemSuccess(response.data.items));
         dispatch(auctionSlice.actions.resetSlice());
     } catch (error) {
@@ -140,11 +140,12 @@ export const getAllAuctionItems = () =>  async (dispatch) => {
 
 
 
-export const getAuctionDetail = (id) =>  async (dispatch) => {
+
+export const getAuctionDetail = (id) => async (dispatch) => {
     dispatch(auctionSlice.actions.getAuctionDetailRequest());
-    try { 
+    try {
         // detail API
-        const response = await axios.get(`http://localhost:8000/api/v1/auctionitem/auction/${id}`,{withCredentials : true});
+        const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/auction/${id}`, { withCredentials: true });
 
         dispatch(auctionSlice.actions.getAuctionDetailSuccess(response.data));
         dispatch(auctionSlice.actions.resetSlice());
@@ -157,10 +158,11 @@ export const getAuctionDetail = (id) =>  async (dispatch) => {
 
 
 
-export const getMyAuctionItems = () =>  async (dispatch) => {
+
+export const getMyAuctionItems = () => async (dispatch) => {
     dispatch(auctionSlice.actions.getMyAuctionsRequest());
     try {
-        const response = await axios.get("http://localhost:8000/api/v1/auctionitem/myitems",{withCredentials : true});
+        const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/myitems`, { withCredentials: true });
         dispatch(auctionSlice.actions.getMyAuctionsSuccess(response.data.items));
 
         dispatch(auctionSlice.actions.resetSlice());
@@ -173,13 +175,14 @@ export const getMyAuctionItems = () =>  async (dispatch) => {
 
 
 
-export const republishAuction = (id,data) =>async(dispatch) => {
+
+export const republishAuction = (id, data) => async (dispatch) => {
     dispatch(auctionSlice.actions.republishItemRequest());
     try {
 
-        const response = await axios.put(`http://localhost:8000/api/v1/auctionitem/item/republish/${id}`,data,{
+        const response = await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/item/republish/${id}`, data, {
             withCredentials: true,
-            headers: {"Content-Type":"application/json"}
+            headers: { "Content-Type": "application/json" }
         })
 
         dispatch(auctionSlice.actions.republishItemSuccess());
@@ -187,7 +190,7 @@ export const republishAuction = (id,data) =>async(dispatch) => {
         dispatch(getMyAuctionItems());
         dispatch(getAllAuctionItems());
         dispatch(auctionSlice.actions.resetSlice());
-        
+
     } catch (error) {
         dispatch(auctionSlice.actions.republishItemFailed());
         toast.error(response.data.message);
@@ -195,14 +198,15 @@ export const republishAuction = (id,data) =>async(dispatch) => {
     }
 }
 
-export const deleteAuction = (id) => async(dispatch) => {
+
+export const deleteAuction = (id) => async (dispatch) => {
     dispatch(auctionSlice.actions.deleteAuctionItemRequest());
 
     try {
-        const response = await axios.delete(`http://localhost:8000/api/v1/auctionitem/delete/${id}`,{
+        const response = await axios.delete(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auctionitem/delete/${id}`, {
             withCredentials: true,
         })
-        
+
         dispatch(auctionSlice.actions.deleteAuctionItemSuccess());
         toast.success(response.data.message);
         dispatch(getMyAuctionItems());
@@ -214,5 +218,6 @@ export const deleteAuction = (id) => async(dispatch) => {
         dispatch(auctionSlice.actions.resetSlice());
     }
 }
+
 
 export default auctionSlice.reducer;

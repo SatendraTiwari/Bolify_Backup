@@ -1,5 +1,6 @@
 import app from "./app.js"
 import cloudinary from "cloudinary";
+import { connection } from "./database/connection.js";
 
 cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -15,6 +16,8 @@ app.get('/',(req,res)=>{
     })
 })
 
+
+connection();
 
 app.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`);

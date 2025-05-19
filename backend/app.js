@@ -23,7 +23,7 @@ const originOption = process.env.FRONTEND_URL;
 console.log(originOption);
 app.use(
   cors({
-    origin: originOption,
+    origin: "https://bolify-backup.vercel.app/",
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })

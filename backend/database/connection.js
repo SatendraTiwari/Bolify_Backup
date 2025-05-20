@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 export const connection = () => {
     mongoose.connect(process.env.MONGO_URI, {
-        dbName: "auctions"
-    },{
+        dbName: "auctions",
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }).then(() => {

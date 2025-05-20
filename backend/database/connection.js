@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 export const connection = () => {
     mongoose.connect(process.env.MONGO_URI, {
-        dbName: "auctions",
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        dbName: "auctions"
     }).then(() => {
         console.log("Connected to database");
     }).catch(err => {

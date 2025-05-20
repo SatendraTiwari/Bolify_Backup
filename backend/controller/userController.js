@@ -123,21 +123,27 @@ export const register = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const login = catchAsyncErrors(async (req, res, next) => {
-  const { email, password } = req.body;
-  console.log("Login data:", email, password);
-  if (!email || !password) {
-    return next(new ErrorHandler("Please fill full form."));
+
+  try {
+    const { email, password } = req.body;
+    console.log("Login data:", email, password);
+    if (!email || !password) {
+      return next(new ErrorHandler("Please fill full form."));
+    }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return next(new ErrorHandler("Invalid credentials.", 400));
+    }
+    const isPasswordMatch = await user.comparePassword(password);
+    if (!isPasswordMatch) {
+      return next(new ErrorHandler("Invalid credentials.", 400));
+    }
+    const userData = await User.findById(user._id).select("-password");
+    generateToken(userData, "Login successfully.", 200, res);
+  } catch (error) {
+    console.error("Login error:", error);
+    return next(new ErrorHandler("Login failed.", 500));
   }
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
-    return next(new ErrorHandler("Invalid credentials.", 400));
-  }
-  const isPasswordMatch = await user.comparePassword(password);
-  if (!isPasswordMatch) {
-    return next(new ErrorHandler("Invalid credentials.", 400));
-  }
-  const userData = await User.findById(user._id).select("-password");
-  generateToken(userData, "Login successfully.", 200, res);
 });
 
 export const getProfile = catchAsyncErrors(async (req, res, next) => {

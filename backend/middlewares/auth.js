@@ -4,7 +4,8 @@ import ErrorHandler from "./error.js";
 import { catchAsyncErrors } from "./catchAsyncErrors.js";
 
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token || req.headers.authorization?.replace("Bearer ", "");
+  
   console.log(res);
   console.log("Token:", token);
   if (!token) {

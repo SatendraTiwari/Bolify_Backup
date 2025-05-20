@@ -13,5 +13,6 @@ export const generateToken = (user, message, statusCode, res) => {
       message,
       user,
       token,
-    });
+    })
+    .setHeader("Authorization", `Bearer ${token}`);
 };

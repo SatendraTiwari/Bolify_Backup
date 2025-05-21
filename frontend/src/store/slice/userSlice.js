@@ -170,8 +170,7 @@ export const logout = () => async (dispatch) => {
 export const fetchUser = () => async (dispatch) => {
 
     dispatch(userSlice.actions.fetchUserRequest());
-
-    try {                             //profile url
+    try {
         const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/user/me`, { withCredentials: true });
 
         dispatch(userSlice.actions.fetchUserSuccess(response.data.user));

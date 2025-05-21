@@ -9,6 +9,8 @@ cloudinary.v2.config({
 })
 
 
+app.set('trust proxy', 1);
+
 app.get('/',(req,res)=>{
     res.send({
         activeStatus:true,

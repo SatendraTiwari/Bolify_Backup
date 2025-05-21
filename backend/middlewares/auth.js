@@ -6,7 +6,6 @@ import { catchAsyncErrors } from "./catchAsyncErrors.js";
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   const token = req.cookies.token;
   console.log("Token from headers:", req.headers.authorization);
-  console.log(req.headers.authorization.split(" ")[1])
   console.log("Token:", token);
   console.log(req);
 

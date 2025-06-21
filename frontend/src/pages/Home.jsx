@@ -80,7 +80,7 @@ const Home = () => {
                 <div className="absolute -top-6 -left-6 w-40 h-40 bg-orange-100 rounded-full opacity-50"></div>
                 <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-red-100 rounded-full opacity-50"></div>
                 <img
-                  src="../public/logo.svg"
+                  src="https://res.cloudinary.com/dwxmrrf1a/image/upload/v1750507256/logo_kjpkow.svg"
                   alt="Auction Banner"
                   className="w-full h-auto rounded-lg shadow-xl relative z-10"
                 />

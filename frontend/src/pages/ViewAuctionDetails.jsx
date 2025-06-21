@@ -69,6 +69,7 @@ const ViewAuctionDetails = () => {
       navigate('/');
     }
   }, [isAuthenticated, user, navigate]);
+  
 
   // Fetch auction details
   useEffect(() => {

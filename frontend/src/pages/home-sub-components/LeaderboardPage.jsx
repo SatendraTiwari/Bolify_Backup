@@ -37,7 +37,6 @@ const LeaderboardPage = () => {
   ];
 
   const { leaderboard } = useSelector((state) => state.user);
-  console.log(leaderboard);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -185,7 +185,6 @@ export const fetchUser = () => async (dispatch) => {
 };
 
 export const fetchLeaderboard = () => async (dispatch) => {
-    console.log("fetchLeaderboard");
     dispatch(userSlice.actions.fetchLeaderboardRequest());
     try {
 

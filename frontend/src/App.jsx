@@ -53,8 +53,8 @@ function App() {
           <Route path="/view-my-auctions" element={<ViewMyAuctions/>} />
           <Route path="/view/details/:id" element={<ViewAuctionDetails/>} />
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
-          {/* <Route path="/me" element={<UserProfile />} /> */}
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/me" element={<UserProfile />} />
         </Routes>
       <ToastContainer position="top-right" />
     </Router>
